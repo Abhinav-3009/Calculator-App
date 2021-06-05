@@ -1,3 +1,4 @@
+import 'package:calculator_app/buttons.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,11 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             flex: 2,
             child: Container(
-              decoration: BoxDecoration(
+              child: MyButtons(
                 color: Colors.grey,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(20),
-                ),
+                buttonText: '0',
+                textColor: Colors.white,
               ),
             ),
           ),
