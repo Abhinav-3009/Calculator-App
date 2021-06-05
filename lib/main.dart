@@ -22,10 +22,32 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final List<String> buttons = [
+    'C',
+    'DEL',
+    '%',
+    '/',
+    '9',
+    '8',
+    '7',
+    '*',
+    '6',
+    '5',
+    '4',
+    '-',
+    '3',
+    '2',
+    '1',
+    '+',
+    '0',
+    '.',
+    'ANS',
+    '=',
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.deepPurple[100],
       body: Column(
         children: [
           Expanded(
@@ -34,15 +56,52 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             flex: 2,
             child: Container(
-              child: MyButtons(
-                color: Colors.grey,
-                buttonText: '0',
-                textColor: Colors.white,
-              ),
+              child: GridView.builder(
+                  itemCount: buttons.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4),
+                  itemBuilder: (ctx, index) {
+                    if (index == 0) {
+                      return MyButtons(
+                        buttonText: buttons[index],
+                        color: Colors.green[400],
+                        textColor: Colors.white,
+                      );
+                    } else if (index == 1) {
+                      return MyButtons(
+                        buttonText: buttons[index],
+                        color: Colors.red[400],
+                        textColor: Colors.white,
+                      );
+                    } else {
+                      return MyButtons(
+                        buttonText: buttons[index],
+                        color: isOperator(buttons[index])
+                            ? Colors.deepPurple
+                            : Colors.deepPurple[50],
+                        textColor: isOperator(buttons[index])
+                            ? Colors.white
+                            : Colors.deepPurple[400],
+                      );
+                    }
+                  }),
             ),
           ),
         ],
       ),
     );
   }
+}
+
+bool isOperator(String x) {
+  if (x == '%' ||
+      x == '/' ||
+      x == '%' ||
+      x == '+' ||
+      x == '-' ||
+      x == '*' ||
+      x == '=') {
+    return true;
+  }
+  return false;
 }
