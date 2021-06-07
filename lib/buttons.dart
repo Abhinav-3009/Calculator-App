@@ -4,8 +4,9 @@ class MyButtons extends StatelessWidget {
   final color;
   final textColor;
   final String buttonText;
+  final buttonTapped;
 
-  MyButtons({this.color, this.textColor, this.buttonText});
+  MyButtons({this.color, this.textColor, this.buttonText,this.buttonTapped});
 
   @override
   Widget build(BuildContext context) {
@@ -13,8 +14,8 @@ class MyButtons extends StatelessWidget {
       padding: const EdgeInsets.all(5),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: InkWell(
-          onTap: (){},
+        child: GestureDetector(
+          onTap: buttonTapped,
           child: Container(
             color: color,
             child: Center(
