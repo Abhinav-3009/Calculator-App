@@ -13,12 +13,15 @@ class MyButtons extends StatelessWidget {
       padding: const EdgeInsets.all(5),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: Container(
-          color: color,
-          child: Center(
-            child: Text(
-              buttonText,
-              style: TextStyle(color: textColor,fontSize: 25),
+        child: InkWell(
+          onTap: (){},
+          child: Container(
+            color: color,
+            child: Center(
+              child: Text(
+                buttonText,
+                style: TextStyle(color: textColor, fontSize: 25),
+              ),
             ),
           ),
         ),
