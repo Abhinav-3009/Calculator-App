@@ -1,5 +1,6 @@
 import 'package:calculator_app/buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,7 +24,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var userQuestion = '';
-  var userAnswer = 'answer';
+  var userAnswer = '0.0';
 
   final List<String> buttons = [
     'C',
@@ -91,9 +92,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemBuilder: (ctx, index) {
                     if (index == 0) {
                       return MyButtons(
-                        buttonTapped: (){
+                        buttonTapped: () {
                           setState(() {
-                            userQuestion='';
+                            userQuestion = '';
                           });
                         },
                         buttonText: buttons[index],
@@ -102,18 +103,30 @@ class _MyHomePageState extends State<MyHomePage> {
                       );
                     } else if (index == 1) {
                       return MyButtons(
-                        buttonTapped: (){
+                        buttonTapped: () {
                           setState(() {
-                            userQuestion= userQuestion.substring(0,userQuestion.length-1);
+                            userQuestion = userQuestion.substring(
+                                0, userQuestion.length - 1);
                           });
                         },
                         buttonText: buttons[index],
                         color: Colors.red[400],
                         textColor: Colors.white,
                       );
+                    } else if (index == buttons.length - 1) {
+                      return MyButtons(
+                        buttonTapped: () {
+                          setState(() {
+                            equalPressed();
+                          });
+                        },
+                        buttonText: buttons[index],
+                        color: Colors.deepPurple,
+                        textColor: Colors.white,
+                      );
                     } else {
                       return MyButtons(
-                        buttonTapped: (){
+                        buttonTapped: () {
                           setState(() {
                             userQuestion += buttons[index];
                           });
@@ -134,17 +147,26 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-}
 
-bool isOperator(String x) {
-  if (x == '%' ||
-      x == '/' ||
-      x == '%' ||
-      x == '+' ||
-      x == '-' ||
-      x == '*' ||
-      x == '=') {
-    return true;
+  bool isOperator(String x) {
+    if (x == '%' ||
+        x == '/' ||
+        x == '%' ||
+        x == '+' ||
+        x == '-' ||
+        x == '*' ||
+        x == '=') {
+      return true;
+    }
+    return false;
   }
-  return false;
+
+  void equalPressed() {
+    String finalQuestion=userQuestion;
+    Parser p = Parser();
+    Expression exp = p.parse(finalQuestion);
+    ContextModel cm = ContextModel();
+    double eval = exp.evaluate(EvaluationType.REAL, cm);
+    userAnswer=eval.toString();
+  }
 }
